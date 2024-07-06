@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/static/logo.png" type="image/png" />
     <title>Video Call</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="/static/call.css">
 
     <style>
@@ -21,124 +23,85 @@
 
     <script>
         let myName;
+        // let audioEnabled = true;
+        // let videoEnabled = true;
     </script>
 </head>
 
 <body>
-    <div>
-        <div>
+    <div class="container">
+        <div class="row justify-content-center">
             <!-- to input username and login -->
-            <div id="userName">
-                <div style="display: flex; flex-direction: column; align-items: center; width: 300px;">
-                    <input placeholder="What should we call you?"
-                        style="text-align:center; height: 50px; font-size: xx-large;" type="text" name=""
-                        id="userNameInput">
-                    <div style="height: 5px;"></div>
-                    <button onclick="login()" class="actionButton">Login</button>
-                </div>
+            <div id="userName" class="col-12 col-md-6 text-center">
+                <input placeholder="What should we call you?" class="form-control form-control-lg text-center mb-3"
+                    type="text" name="" id="userNameInput">
+                <button onclick="login()" class="btn btn-primary">Login</button>
             </div>
 
             <!-- to display current login user information  -->
-            <div id="userInfo">
-                <div style="display: flex; flex-direction: column; align-items: center; width: 300px;">
-                    <h1>Hello, <span id="nameHere"></span></h1>
-                </div>
-
+            <div id="userInfo" class="col-12 col-md-6 text-center">
+                <h1>Hello, <span id="nameHere"></span></h1>
             </div>
 
             <!-- to make a call with name -->
-            <div id="call">
-                <div class="dialWrapper">
-                    <input placeholder="Whom to call?" style="text-align:center; height: 50px; font-size: xx-large;"
-                        type="text" name="callName" id="callName">
-                    <div class="dialNumpadHWrapper">
-                        <div class="dialNumber">
-                        </div>
-                        <div class="dialNumber">
-                            <button class="dialActionButton" onclick="call()">Call</button>
-                        </div>
-                        <div class="dialNumber">
-                        </div>
-                    </div>
-
-                </div>
+            <div id="call" class="col-12 col-md-6 text-center">
+                <input placeholder="Whom to call?" class="form-control form-control-lg text-center mb-3" type="text"
+                    name="callName" id="callName">
+                <button class="btn btn-success" onclick="call()">Call</button>
             </div>
 
-            <!-- to show incommming call and accept -->
-            <div id="answer">
-                <div class="incomingWrapper">
-                    <div class="itemWrapper">
-                        <h2>Incomming Call</h2>
-                    </div>
-                    <div class="itemWrapper">
-                        <img id="profileImageA" style="padding: 30px; width: 140px; height: 140px;"
-                            src="/static/profile.png" alt="">
-                    </div>
-                    <div class="itemWrapper">
-                        <h2 style="line-height: 0px;"><span id="callerName"></span></h2>
-                    </div>
-                    <div class="itemWrapper" style="display: flex; flex-direction: row; margin-bottom: 20px;">
-                        <button class="actionButton" onclick="answer()">Answer</button>
-                    </div>
-                </div>
+            <!-- to show incoming call and accept -->
+            <div id="answer" class="col-12 col-md-6 text-center">
+                <h2>Incoming Call</h2>
+                <img id="profileImageA" class="img-fluid mb-3" style="width: 140px;" src="/static/profile.png" alt="">
+                <h2><span id="callerName"></span></h2>
+                <button class="btn btn-primary" onclick="answer()">Answer</button>
             </div>
 
             <!-- to show outgoing call -->
-            <div id="calling">
-                <div class="incomingWrapper">
-                    <div class="itemWrapper">
-                        <h2>Calling</h2>
-                    </div>
-                    <div class="itemWrapper">
-                        <img id="profileImageCA" style="padding: 30px; width: 140px; height: 140px;"
-                            src="/static/profile.png" alt="">
-                    </div>
-                    <div class="itemWrapper">
-                        <h3 style="line-height: 0px;"><span id="otherUserNameCA"></span></h3>
-                    </div>
-                </div>
+            <div id="calling" class="col-12 col-md-6 text-center">
+                <h2>Calling</h2>
+                <img id="profileImageCA" class="img-fluid mb-3" style="width: 140px;" src="/static/profile.png" alt="">
+                <h3><span id="otherUserNameCA"></span></h3>
             </div>
 
             <!-- to show call in progress call -->
-            <div id="inCall">
-                <div class="incomingWrapper">
-                    <div class="itemWrapper">
-                        <h3>On Call With</h3>
-                        <h2 style="line-height: 0px;"><span id="otherUserNameC"></span></h2>
-                    </div>
-                </div>
+            <div id="inCall" class="col-12 col-md-6 text-center">
+                <h3>On Call With</h3>
+                <h2><span id="otherUserNameC"></span></h2>
             </div>
 
-            <br>
-
             <!-- to show local and remote video -->
-            <div id="videos">
-                <div style="position:absolute; top:0; right:0; padding-right: 20px; padding-top: 20px">
+            <div id="videos" class="col-12 text-center">
+                <div class="position-absolute" style="top: 20px; right: 20px;">
                     <video width="100px" id="localVideo" autoplay muted playsinline></video>
                 </div>
                 <div id="remoteVideoDiv">
-                    <video style="width: 500px;" id="remoteVideo" autoplay playsinline></video>
+                    <video class="img-fluid" id="remoteVideo" autoplay playsinline></video>
                 </div>
             </div>
-            <div style="flex-grow: 1;">
+
+            <div id="controls" class="col-12 text-center mt-3">
+                <button id="toggleAudioButton" class="btn btn-warning" onclick="toggleAudio()">
+                    <i class="fas fa-microphone"></i> Mute Audio
+                </button>
+                <button id="toggleVideoButton" class="btn btn-success" onclick="toggleVideo()">
+                    <i class="fas fa-video"></i> Disable Video
+                </button>
             </div>
         </div>
-
-
-
-        <div id="controls">
-            <button id="toggleAudioButton" onclick="toggleAudio()">Toggle Audio</button>
-            <button id="toggleVideoButton" onclick="toggleVideo()">Toggle Video</button>
-        </div>
-        
-
     </div>
-    <div style="flex-grow: 1;">
-    </div>
-    <div>Footer</div>
-    <div>v 0.2.0</div>
+    
 
+    <footer class="mt-auto text-center">
+        <div>Footer</div>
+        <div>v 0.2.0</div>
+    </footer>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script src="/static/call.js"></script>
     <script>
         document.getElementById("call").style.display = "none";
@@ -147,7 +110,6 @@
         document.getElementById("inCall").style.display = "none";
         document.getElementById("calling").style.display = "none";
         document.getElementById("videos").style.display = "none";
-
     </script>
     <script>
         function login() {
@@ -160,6 +122,22 @@
             document.getElementById("userInfo").style.display = "block";
 
             connectSocket();
+        }
+
+        // Function to toggle audio
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            localStream.getAudioTracks()[0].enabled = audioEnabled;
+            const audioButton = document.getElementById('toggleAudioButton');
+            audioButton.innerHTML = audioEnabled ? '<i class="fas fa-microphone"></i> Mute Audio' : '<i class="fas fa-microphone-slash"></i> Unmute Audio';
+        }
+
+        // Function to toggle video
+        function toggleVideo() {
+            videoEnabled = !videoEnabled;
+            localStream.getVideoTracks()[0].enabled = videoEnabled;
+            const videoButton = document.getElementById('toggleVideoButton');
+            videoButton.innerHTML = videoEnabled ? '<i class="fas fa-video"></i> Disable Video' : '<i class="fas fa-video-slash"></i> Enable Video';
         }
     </script>
 </body>

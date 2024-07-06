@@ -374,14 +374,20 @@ function callProgress() {
 
 // Function to toggle audio
 function toggleAudio() {
-    audioEnabled = !audioEnabled;
-    localStream.getAudioTracks()[0].enabled = audioEnabled;
-    document.getElementById('toggleAudioButton').innerText = audioEnabled ? 'Mute Audio' : 'Unmute Audio';
+    if (localStream && localStream.getAudioTracks().length > 0) {
+        audioEnabled = !audioEnabled;
+        localStream.getAudioTracks()[0].enabled = audioEnabled;
+        const audioButton = document.getElementById('toggleAudioButton');
+        audioButton.innerHTML = audioEnabled ? '<i class="fas fa-microphone"></i> Mute Audio' : '<i class="fas fa-microphone-slash"></i> Unmute Audio';
+    }
 }
 
 // Function to toggle video
 function toggleVideo() {
-    videoEnabled = !videoEnabled;
-    localStream.getVideoTracks()[0].enabled = videoEnabled;
-    document.getElementById('toggleVideoButton').innerText = videoEnabled ? 'Disable Video' : 'Enable Video';
+    if (localStream && localStream.getVideoTracks().length > 0) {
+        videoEnabled = !videoEnabled;
+        localStream.getVideoTracks()[0].enabled = videoEnabled;
+        const videoButton = document.getElementById('toggleVideoButton');
+        videoButton.innerHTML = videoEnabled ? '<i class="fas fa-video"></i> Disable Video' : '<i class="fas fa-video-slash"></i> Enable Video';
+    }
 }
